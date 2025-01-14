@@ -1,11 +1,9 @@
 import Labs from "./Labs";
 
-function App() {
+export default function App() {
   return (
     <div>
       <Labs />
     </div>
   )
 }
-
-export default App;
