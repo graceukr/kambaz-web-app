@@ -9,7 +9,7 @@ export default function TOC() {
         <li><Link to="/Labs/Lab3">Lab 3</Link></li>
         <li><Link to="/Kambaz">Kambaz</Link></li>
         <li><a href="https://app.netlify.com/sites/kambaz-web-app/overview">Netlify</a></li>
-        <li><a href="https://github.com/graceukr/kambaz-web-app">Github</a></li>
+        <li><a href="https://github.com/graceukr/kambaz-web-app">Github Repo</a></li>
       </ul>
     );
   }
