@@ -1,95 +1,105 @@
+import { Badge, Button, Col, Form, FormControl, FormGroup, FormLabel, FormText, InputGroup, Row } from "react-bootstrap";
+import { HiOutlineX } from "react-icons/hi";
+import { IoCalendarOutline } from "react-icons/io5";
+
 export default function AssignmentEditor() {
     return (
       <div id="wd-assignments-editor">
-        <label htmlFor="wd-name"><h3>Assignment Name</h3></label> 
-        <input id="wd-name" value="A1 - ENV + HTML" /> <br /> <br />
-        <textarea id="wd-description">
-          The assignment is available online Submit a link to the landing page of 
-          your Web application running on Netlify. The landing page should include the 
-          following: Your full name and section Links to each of the lab assignmnets Link 
-          to the Kanbas application Links to all relevant source code repositories The Kabas application
-          should include a link to navigate back to the landing page.
-        </textarea>
-        <br />
-        <br />
-        <table>
-          <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-points">Points</label>
-            </td>
-            <td>
-              <input id="wd-points" value={100} />
-            </td>
-          </tr> <br />
-          <tr>
-            <td align="right" valign="top">
-                <label htmlFor="wd-group">Assignment Group</label>
-            </td>
-            <td>
-                <select id="wd-group">
-                    <option selected value="ASSIGNMENTS">ASSIGNMENTS</option>
-                </select>
-            </td>
-          </tr> <br />
-          <tr>
-            <td align="right" valign="top">
-                <label htmlFor="wd-display-grade-as">Display Grade as</label>
-            </td>
-            <td>
-                <select id="wd-display-grade-as">
-                    <option selected value="PERCENTAGE">Percentage</option>
-                </select>
-            </td>
-          </tr> <br />
-          <tr>
-            <td align="right" valign="top">
-                <label htmlFor="wd-submission-type">Submission Type</label>
-            </td>
-            <td>
-                <select id="wd-submission-type">
-                    <option selected value="ONLINE">Online</option>
-                </select> <br /> <br />
-                <label>Online Entry Options</label> <br/>
-                <input type="checkbox" name="check-genre" id="wd-text-entry"/>
-                <label htmlFor="wd-text-entry">Text Entry</label> <br/>
-                <input type="checkbox" name="check-genre" id="wd-website-url"/>
-                <label htmlFor="wd-website-url">Website URL</label> <br/>
-                <input type="checkbox" name="check-genre" id="wd-media-recordings"/>
-                <label htmlFor="wd-media-recordings">Media Recordings</label> <br/>
-                <input type="checkbox" name="check-genre" id="wd-student-annotation"/>
-                <label htmlFor="wd-student-annotation">Student Annotation</label> <br />
-                <input type="checkbox" name="check-genre" id="wd-file-upload"/>
-                <label htmlFor="wd-file-upload">File Uploads</label>
-            </td>
-          </tr> <br />
-          <tr>
-            <td align="right" valign="top">
-                <label htmlFor="wd-assign">Assign</label>
-            </td>
-            <td>
-                <label htmlFor="wd-assign-to">Assign to</label> <br />
-                <input type="text" id="wd-assign-to" value="Everyone"/> <br /> <br />
-                <label htmlFor="wd-due-date">Due</label> <br />
-                <input type="date" id="wd-due-date" value="2024-05-13"/> <br/> <br />
-                <div style={{display: "flex", alignItems: "center"}}>
-                    <div>
-                        <label htmlFor="wd-available-from">Available from</label> <br />
-                        <input type="date" id="wd-available-from" value="2024-05-06"/>
+        <Form.Group className="mb-3" controlId="wd-assignment-name">
+            <Form.Label>Assignment Name</Form.Label>
+            <Form.Control type="email" value="A1" />
+        </Form.Group>
+        <Form.Group className="mb-3" controlId="wd-textarea">
+          <Form.Control as="textarea" contentEditable="true" rows={3} 
+          value={"The assignment is available online\n\nSubmit a link to the landing page of your Web application running on Netlify.\n\nThe landing page should include the following:\n• Your full name and section\n• Links to each of the lab assignmnets\n• Link to the Kanbas application\n• Links to all relevant source code repositories\n\nThe Kanbas application should include a link to navigate back to the landing page."}>
+          </Form.Control>
+        </Form.Group>
+        <Form>
+          <Form.Group as={Row} className="mb-3">
+              <Form.Label column sm={2} className="text-end">Points</Form.Label>
+              <Col sm={10}>
+              <Form.Control type="text" value="100" />
+              </Col>
+          </Form.Group>
+          <Form.Group as={Row} className="mb-3">
+              <Form.Label column sm={2} className="text-end">Assignment Group</Form.Label>
+              <Col sm={10}>
+              <Form.Select>
+                    <option selected>ASSIGNMENTS</option>
+              </Form.Select>
+              </Col>
+          </Form.Group>
+          <Form.Group as={Row} className="mb-3">
+              <Form.Label column sm={2} className="text-end">Display Grade as</Form.Label>
+              <Col sm={10}>
+              <Form.Select>
+                    <option selected>Percentage</option>
+              </Form.Select>
+              </Col>
+          </Form.Group>
+          <fieldset>
+              <Form.Group as={Row} className="mb-3">
+              <Form.Label column sm={2} className="text-end">Submission Type</Form.Label>
+              <Col sm={10} className="border">
+                  <Form.Select className="mt-3 mb-3">
+                    <option selected>Online</option>
+                  </Form.Select>
+                  <b>Online Entry Options</b>
+                  <Form.Check className="mt-2 mb-2" label="Media Recordings"
+                  name="formHorizontalRadios"/>
+                  <Form.Check className="mb-2" label="Website URL"
+                  checked name="formHorizontalRadios"/>
+                  <Form.Check className="mb-2" label="Media Recordings"
+                  name="formHorizontalRadios"/>
+                  <Form.Check className="mb-2" label="Student Annotation"
+                  name="formHorizontalRadios"/>
+                  <Form.Check className="mb-2" label="File Uploads"
+                  name="formHorizontalRadios"/>
+              </Col>
+              </Form.Group>
+          </fieldset>
+          <fieldset>
+              <Form.Group as={Row} className="mb-3">
+              <Form.Label column sm={2} className="text-end">Assign</Form.Label>
+              <Col sm={10} className="border">
+                  <Form.Label className="bold-text mt-3" >Assign to</Form.Label>
+                  <div className="position-relative d-flex align-items-center border rounded p-2">
+                    <div className="badge rounded-pill bg-light text-dark d-flex align-items-center me-2">
+                      Everyone
+                      <span className="ms-1 text-muted ">{" "}<HiOutlineX />{" "}</span>
                     </div>
-                    &nbsp;
-                    <div>
-                        <label htmlFor="wd-available-until">Until</label> <br />
-                        <input type="date" id="wd-available-until" value="2024-05-20"/>
-                    </div>
-                </div>
-            </td>
-          </tr>
-        </table>
+                  </div>
+                  <Form.Label className="bold-text mt-3" >Due</Form.Label>
+                  <InputGroup>
+                    <Form.Control type="text" value="May 13, 2024, 11:59 PM"></Form.Control>
+                    <InputGroup.Text><IoCalendarOutline /></InputGroup.Text>
+                  </InputGroup>
+                  <Row className="mb-3 mt-3">
+                      <Form.Group as={Col}>
+                        <Form.Label className="bold-text" >Available from</Form.Label>
+                        <InputGroup >
+                          <Form.Control type="text" value="May 6, 2024, 12:00 AM"></Form.Control>
+                          <InputGroup.Text><IoCalendarOutline /></InputGroup.Text>
+                        </InputGroup>
+                      </Form.Group>
+                      <Form.Group as={Col}>
+                        <Form.Label className="bold-text" >Until</Form.Label>
+                        <InputGroup>
+                          <Form.Control type="text"></Form.Control>
+                          <InputGroup.Text><IoCalendarOutline /></InputGroup.Text>
+                        </InputGroup>
+                      </Form.Group>
+                  </Row>
+              </Col>
+              </Form.Group>
+          </fieldset>
+        </Form>
         <hr />
-        <div style={{display:"flex", justifyContent:"flex-end"}}> 
-            <button>Cancel</button>&nbsp;
-            <button>Save</button>
+        <div className="float-end">
+          <Button variant="secondary" size="sm" className="me-1">Cancel</Button>
+          <Button variant="danger" size="sm">Save</Button>
         </div>
+      
       </div>
   );}
   
