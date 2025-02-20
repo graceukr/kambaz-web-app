@@ -31,8 +31,5 @@ export default function ModulesControls() {
         View Progress</Button>
       <Button variant="secondary" size="lg" className="me-1 float-end text-nowrap" id="wd-collapse-all">
       Collapse All</Button>
-      
-     
-  
    </div>
 );}
