@@ -12,7 +12,7 @@ export default function Account() {
                     <td valign="top">
                         <AccountNavigation />
                     </td>
-                    <td valign="top">
+                    <td className="px-3" valign="top">
                         <Routes>
                             <Route path="/" element={<Navigate to="/Kambaz/Account/Signin" />} />
                             <Route path="/Signin" element={<Signin />} />

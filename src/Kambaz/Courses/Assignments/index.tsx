@@ -1,37 +1,56 @@
+import { BsGripVertical } from "react-icons/bs";
+import AssignmentsControls from "./AssignmentsControls";
+import { IoMdArrowDropdown } from "react-icons/io";
+import AssignmentControlButtons from "./AssignmentControlButtons";
+import { TfiWrite } from "react-icons/tfi";
+import GroupControlButtons from "./GroupControlButtons";
+import "./style.css";
+import { Link, useParams } from "react-router";
+import * as db from "../../Database";
+
 export default function Assignments() {
+  const { cid } = useParams();
+  const assignments = db.assignments;
     return (
       <div id="wd-assignments">
-        <input placeholder="Search for Assignments"
-               id="wd-search-assignment" />&nbsp;
-        <button id="wd-add-assignment-group">+ Group</button>&nbsp;
-        <button id="wd-add-assignment">+ Assignment</button>
-        <h3 id="wd-assignments-title">
-          ASSIGNMENTS 40% of Total <button>+</button> </h3>
-        <ul id="wd-assignment-list">
-          <li className="wd-assignment-list-item">
-            <a href="#/Kambaz/Courses/1234/Assignments/123"
-               className="wd-assignment-link" >
-              A1 - ENV + HTML
-            </a> <br />
-            Multiple Modules | <b>Not available until</b> May 6th at 12:00 am | <br />
-            <b>Due</b> May 13 at 11:59 pm | 100 pts
-          </li>
-          <li className="wd-assignment-list-item">
-          <a href="#/Kambaz/Courses/1234/Assignments/123"
-               className="wd-assignment-link" >
-              A2 - CSS + BOOTSTRAP
-            </a> <br />
-            Multiple Modules | <b>Not available until</b> May 13th at 12:00 am | <br />
-            <b>Due</b> May 20 at 11:59 pm | 100 pts
-          </li>
-          <li className="wd-assignment-list-item">
-          <a href="#/Kambaz/Courses/1234/Assignments/123"
-               className="wd-assignment-link" >
-              A3 - JAVASCRIPT + REACT
-            </a> <br />
-            Multiple Modules | <b>Not available until</b> May 20th at 12:00 am | <br />
-            <b>Due</b> May 27 at 11:59 pm | 100 pts
-          </li>
+        <AssignmentsControls /> <br/> <br/>
+        <ul id="wd-assignments" className="list-group rounded-0">
+          <li className="wd-assignments list-group-item p-0 mb-5 fs-5 border-gray">
+              <div className="wd-assignment-title p-3 ps-2 bg-secondary"> 
+                <BsGripVertical className="me-2 fs-3 mb-2" />
+                <IoMdArrowDropdown className="me-2 mb-2"/>
+                <span className="header-text">ASSIGNMENTS</span> 
+                <AssignmentControlButtons />
+              </div>
+          {assignments
+            .filter((assignment) => assignment.course === cid)
+            .map((assignment) => (
+              <ul className="wd-lessons list-group rounded-0">
+                <li className="wd-lesson list-group-item p-3 ps-1">
+                    <div 
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                          alignItems: "center",
+                        }}>
+                          <BsGripVertical className="me-2 fs-3" />
+                          <TfiWrite className="text-success me-4" size={32}/>
+                          <div>
+                            <Link to={`/Kambaz/Courses/${cid}/Assignments/${assignment._id}`}
+                            className="wd-assignment-link text-decoration-none text-black" >
+                            <span className="header-text">{assignment.title}</span>
+                            </Link> 
+                            <br />
+                            <text className="text-danger">Multiple Modules</text> | <b>Not available until</b> {assignment.available} | <br />
+                            <b>Due</b> {assignment.due} | {assignment.points} pts
+                          </div>
+                          <div style={{ flexGrow: "1", flexDirection: "row"}}> 
+                          <GroupControlButtons /> </div>
+                    </div>
+                </li>
+              </ul>
+            ))}
+            </li>
         </ul>
       </div>
   );}
