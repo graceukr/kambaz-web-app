@@ -1,0 +1,29 @@
+.todo-container {
+    margin: 10px;
+    max-width: 500px;
+    }
+
+.todo-container .todo-add-button {
+    background-color: green;
+    border: none;
+    border-radius: 5px;
+    }
+
+.todo-container .todo-update-button {
+    background-color: #ffd900;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    }
+
+.todo-container .todo-edit-button {
+    background-color: blue;
+    border: none;
+    border-radius: 5px;
+    }
+
+.todo-container .todo-delete-button {
+    background-color: red;
+    border: none;
+    border-radius: 5px;
+    }

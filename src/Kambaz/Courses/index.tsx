@@ -6,12 +6,15 @@ import Assignments from "./Assignments";
 import AssignmentEditor from "./Assignments/Editor";
 import { FaAlignJustify } from "react-icons/fa";
 import PeopleTable from "./People/Table";
-import { courses } from "../Database";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
 
 export default function Courses() {
     const { cid } = useParams();
-    const course = courses.find((course) => course._id === cid);
+    const courses = useSelector((state: RootState) => state.courseReducer.courses);
+    const course = courses.find((c: any) => c._id === cid);
     const { pathname } = useLocation();
+
     return (
       <div id="wd-courses">
         <h2 className="text-danger">
@@ -25,15 +28,16 @@ export default function Courses() {
             <div className="flex-fill">
                 <Routes>
                     <Route path="/" element={<Navigate to="Home" />} />
-                    <Route path="Home" element={<Home />} />
-                    <Route path="Modules" element={<Modules />} />
-                    <Route path="Assignments" element={<Assignments />} />
-                    <Route path="Assignments/:aid" element={<AssignmentEditor />} />
-                    <Route path="People" element={<PeopleTable />} />
+                    <Route path="/Home" element={<Home />} />
+                    <Route path="/Modules" element={<Modules />} />
+                    <Route path="/Assignments" element={<Assignments />} />
+                    <Route path="/Assignments/:aid/" element={<AssignmentEditor />} />
+                    <Route path="/People" element={<PeopleTable />} />
                 </Routes>
             </div>
         </div>
       </div>
   );
 }
+
   
