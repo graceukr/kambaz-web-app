@@ -11,6 +11,8 @@ export default function TOC() {
           active={pathname.includes("Lab2")}> Lab 2 </Nav.Link> </Nav.Item>
      <Nav.Item> <Nav.Link as={Link} to="/Labs/Lab3" id="wd-a3" href="#/Labs/Lab3"
           active={pathname.includes("Lab3")}> Lab 3 </Nav.Link> </Nav.Item>
+     <Nav.Item> <Nav.Link as={Link} to="/Labs/Lab4" id="wd-a4" href="#/Labs/Lab4"
+          active={pathname.includes("Lab4")}> Lab 4 </Nav.Link> </Nav.Item>
      <Nav.Item> <Nav.Link href="#/Kambaz">Kambaz</Nav.Link> </Nav.Item>
      <Nav.Item> <Nav.Link id="wd-github" href="https://github.com/graceukr/kambaz-web-app"> My GitHub </Nav.Link> </Nav.Item>
    </Nav>
