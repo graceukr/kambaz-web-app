@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { courses, enrollments } from "../Database";
+import { v4 as uuidv4 } from "uuid";
 
 const initialState = {
   courses: courses,
@@ -10,7 +11,14 @@ const coursesSlice = createSlice({
   initialState,
   reducers: {
     addCourse: (state, { payload: course }) => {
-      state.courses = [...state.courses, course] as any;
+      const newCourse: any = {
+        _id: uuidv4(),
+        name: course.name,
+        number: uuidv4(),
+        description: course.description,
+        image: "reactjs.jpeg",
+      };
+      state.courses = [...state.courses, newCourse] as any;
     },
     deleteCourse: (state, { payload: courseId }) => {
       state.courses = state.courses.filter(
@@ -27,7 +35,12 @@ const coursesSlice = createSlice({
       ) as any;
     },
     addEnrollment: (state, { payload: enrollment }) => {
-      state.enrollments = [...state.enrollments, enrollment] as any;
+      const newEnrollment: any = {
+        _id: uuidv4(),
+        user: enrollment.user,
+        course: enrollment.course,
+      };
+      state.enrollments = [...state.enrollments, newEnrollment] as any;
     },
     deleteEnrollment: (state, { payload: enrollmentId }) => {
       state.enrollments = state.enrollments.filter(
