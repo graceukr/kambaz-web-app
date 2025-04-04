@@ -46,3 +46,19 @@ export const findMyEnrollments = async () => {
     const { data } = await axiosWithCredentials.get(`${USERS_API}/current/enrollments`);
     return data;
 }
+
+export const enrollUserInCourse = async (courseId: string) => {
+    try {
+        const response = await axiosWithCredentials.post(`${USERS_API}/current/courses/${courseId}/enroll`, courseId);
+        return response.data
+    } catch (error) {
+        console.error("enrollment error details:");
+        throw error;
+    }
+    
+}
+
+export const unenrollUserFromCourse = async (courseId: string) => {
+    const response = await axiosWithCredentials.post(`${USERS_API}/current/courses/${courseId}/unenroll`, courseId);
+    return response.data
+}
