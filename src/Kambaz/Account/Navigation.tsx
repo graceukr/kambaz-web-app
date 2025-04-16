@@ -7,15 +7,36 @@ export default function AccountNavigation() {
     const links = currentUser ? ["Profile"] : ["Signin", "Signup"];
     const { pathname } = useLocation();
     return (
-        <ListGroup id="wd-account-navigation" className="wd list-group fs-5 rounded-0 sticky-top">
-            {links.map((link) => (
-                <ListGroup.Item key={`/Kambaz/Account/${link}`} as={Link} to={`/Kambaz/Account/${link}`} 
-                    className={`list-group-item border border-0
-                        ${pathname.includes(link) ? "active" : "text-danger"}`}>
-                    {link}
-                </ListGroup.Item>
-            ))}
-        </ListGroup>
+        <div
+      id="wd-account-navigation"
+      style={{ width: 150 }}
+      className="wd list-group fs-5 sticky-top"
+    >
+      <ListGroup className="wd">
+        {links.map((link) => (
+          <ListGroup.Item
+            key={link}
+            as={Link}
+            to={`/Kambaz/Account/${link}`}
+            className={`list-group-item 
+              ${
+                pathname.includes(link)
+                  ? "active border border-0"
+                  : "text-danger border border-0"
+              }`}
+          >
+            {link}
+          </ListGroup.Item>
+        ))}
+      </ListGroup>
+      {currentUser && currentUser.role === "ADMIN" && (
+       <Link to={`/Kambaz/Account/Users`} 
+            className={`list-group-item
+                ${pathname.includes("Users")
+                    ? "active border border-0"
+                    : "text-danger border border-0"
+                }`}> Users </Link> )}
+    </div>
     );
 }
 

@@ -19,44 +19,61 @@ export default function Modules() {
     const { modules } = useSelector((state: any) => state.modulesReducer);
     const dispatch = useDispatch();
 
-    const fetchModules = async () => {
+    const fetchModulesForCourse = async () => {
       const modules = await coursesClient.findModulesForCourse(cid as string);
       dispatch(setModules(modules));
     };
     useEffect(() => {
-      fetchModules();
-    }, []);
+      fetchModulesForCourse();
+    }, [cid]);
   
+    /*
     const createModuleForCourse = async () => {
       if (!cid) return;
       const newModule = { name: moduleName, course: cid };
       const module = await coursesClient.createModuleForCourse(cid, newModule);
       dispatch(addModule(module));
     };
-    
+    */
+    const deleteModuleHandler = async (moduleId: string) => {
+      await modulesClient.deleteModule(moduleId);
+      dispatch(deleteModule(moduleId));
+    };   
+    /*
     const removeModule = async (moduleId: string) => {
       await modulesClient.deleteModule(moduleId);
       dispatch(deleteModule(moduleId));
     };
+*/
 
+    const updateModuleHandler = async (module: any) => {
+      await modulesClient.updateModule(module);
+      dispatch(updateModule(module));
+    };
+/*
     const saveModule = async (module: any) => {
       await modulesClient.updateModule(module);
       dispatch(updateModule(module));
     };
+*/
+    const addModuleHandler = async () => {
+      const newModule = await coursesClient.createModuleForCourse(cid!, {
+        name: moduleName,
+        course: cid,
+      });
+      dispatch(addModule(newModule));
+      setModuleName("");
+    };   
   
     return (
       <div id="wd-modules">
         <FacultyProtectedRoute>
         <ModulesControls setModuleName={setModuleName} moduleName={moduleName} 
-          addModule={createModuleForCourse
-            /*() => {
-            dispatch(addModule({ name: moduleName, course: cid }));
-            setModuleName("");
-          }*/} /><br /><br /><br /><br /> 
+          addModule={addModuleHandler} /><br /><br /><br /><br /> 
         </FacultyProtectedRoute>
         <ul id="wd-modules" className="list-group rounded-0">
           {modules
-            //.filter((module: any) => module.course === cid)
+            .filter((module: any) => module.course === cid)
             .map((module: any) => (
             <li key={module._id} className="wd-module list-group-item p-0 mb-5 fs-5 border-gray">
               <div className="wd-title p-3 ps-2 bg-secondary">
@@ -64,20 +81,18 @@ export default function Modules() {
                 {!module.editing && module.name}
                 { module.editing && (
                   <FormControl className="w-50 d-inline-block"
-                        onChange={(e) => dispatch(updateModule({ ...module, name: e.target.value }))}
+                        onChange={(e) => updateModuleHandler({ ...module, name: e.target.value })}
                         onKeyDown={(e) => {
                           if (e.key === "Enter") {
-                            saveModule({ ...module, editing: false });
+                            updateModuleHandler({ ...module, editing: false });
                           }
                         }}
-                        defaultValue={module.name}/>
+                        value={module.name}/>
                 )}
                 <FacultyProtectedRoute>
                   <ModuleControlButtons 
                       moduleId={module._id}
-                      deleteModule={(moduleId) => {
-                        removeModule(moduleId);
-                      }}
+                      deleteModule={(moduleId) => {deleteModuleHandler(moduleId);}}
                       editModule={(moduleId) => dispatch(editModule(moduleId))}/>
                 </FacultyProtectedRoute>
               </div>

@@ -32,11 +32,10 @@ export default function AssignmentEditor() {
     //const [assignmentName, setAssignmentName] = useState("");
     
 
-    const createAssignmentForCourse = async () => {
-      if (!cid) return;
-      //const newAssignment = { name: assignmentName, course: cid };
-      const newAssignment = await coursesClient.createAssignmentForCourse(cid, assignment);
+    const addAssignmentHandler = async () => {
+      const newAssignment = await coursesClient.createAssignmentForCourse(cid!, assignment);
       dispatch(addAssignment(newAssignment));
+      setAssignment({...assignment, title: ""});
     };
     
     const saveAssignment = async (assignment: any) => {
@@ -45,23 +44,12 @@ export default function AssignmentEditor() {
           dispatch(updateAssignment(assignment));
           console.log("2", assignment);
     };
-
-    
-    /*
-    const saveAssignment = async (assignment: any) => {
-      console.log("not updated 1");
-      await assignmentsClient.updateAssignment(assignment);
-      console.log("not updated 2");
-      dispatch(updateAssignment(assignment));
-      console.log("assignment updated");
-    };
-    */
     
 
     const handleSave = async () => {
       try {
         if (isNewAssignment) {
-          createAssignmentForCourse();
+          addAssignmentHandler();
         } else {
           saveAssignment({ ...assignment});
         }

@@ -6,14 +6,30 @@ import Assignments from "./Assignments";
 import AssignmentEditor from "./Assignments/Editor";
 import { FaAlignJustify } from "react-icons/fa";
 import PeopleTable from "./People/Table";
-//import { useSelector } from "react-redux";
-//import { RootState } from "../store";
+import * as coursesClient from "../Courses/client";
+//import * as accountClient from "../Account/client";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 export default function Courses({ courses } : { courses: any[] }) {
+    const { currentUser } = useSelector((state: any) => state.accountReducer);
     const { cid } = useParams();
-    //const courses = useSelector((state: RootState) => state.courseReducer.courses);
     const course = courses.find((c: any) => c._id === cid);
     const { pathname } = useLocation();
+
+    const [users, setUsers] = useState<any[]>([]);
+    const findUsersForCourse = async () => {
+        try {
+            const users = await coursesClient.findUsersForCourse(course._id);
+            setUsers(users);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    useEffect(() => {
+        findUsersForCourse();
+    }, [currentUser])
 
     
     return (
@@ -33,7 +49,7 @@ export default function Courses({ courses } : { courses: any[] }) {
                     <Route path="/Modules" element={<Modules />} />
                     <Route path="/Assignments" element={<Assignments />} />
                     <Route path="/Assignments/:aid/" element={<AssignmentEditor />} />
-                    <Route path="/People" element={<PeopleTable />} />
+                    <Route path="/People" element={<PeopleTable users={users}/>} />
                 </Routes>
             </div>
         </div>

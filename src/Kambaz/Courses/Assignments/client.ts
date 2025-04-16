@@ -7,15 +7,7 @@ export const deleteAssignment = async (assignmentId: string) => {
 };
    
 export const updateAssignment = async (assignment: any) => {
-    console.log(assignment);
     const { data } = await axios.put(`${ASSIGNMENTS_API}/${assignment._id}`, assignment);
     return data;
 };
 
-export const createAssignmentForCourse = async (courseId: string, assignment: any) => {
-    const response = await axios.post(
-        `${ASSIGNMENTS_API}/${courseId}/assignments`,
-        assignment
-    );
-    return response.data;
-};
