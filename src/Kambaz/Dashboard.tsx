@@ -2,8 +2,6 @@ import { Button, Card, Col, FormControl, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import FacultyProtectedRoute from "./Courses/FacultyProtectedRoute";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
-import { enrollments } from "./Database";
 
 export default function Dashboard({   
     courses,
@@ -58,9 +56,6 @@ export default function Dashboard({
       const isEnrolled = (courseId: string) => {
         return courses.some((course) => course._id === courseId);
       };
-
-      const { currentUser } = useSelector((state: any) => state.accountReducer);
-      console.log("enrollments", enrollments);
     
       
     return (
