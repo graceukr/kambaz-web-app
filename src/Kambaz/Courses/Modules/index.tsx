@@ -12,7 +12,6 @@ import FacultyProtectedRoute from "../FacultyProtectedRoute";
 import * as coursesClient from "../client";
 import * as modulesClient from "./client";
 
-
 export default function Modules() {
     const { cid } = useParams();
     const [moduleName, setModuleName] = useState("");
@@ -23,6 +22,7 @@ export default function Modules() {
       const modules = await coursesClient.findModulesForCourse(cid as string);
       dispatch(setModules(modules));
     };
+
     useEffect(() => {
       fetchModulesForCourse();
     }, [cid]);

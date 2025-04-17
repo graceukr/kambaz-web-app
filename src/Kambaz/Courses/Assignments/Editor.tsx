@@ -37,6 +37,13 @@ export default function AssignmentEditor() {
       dispatch(addAssignment(newAssignment));
       setAssignment({...assignment, title: ""});
     };
+
+    const updateAssignmentHandler = async (assignment: any) => {
+      await assignmentsClient.updateAssignment(assignment);
+      dispatch(updateAssignment(assignment));
+    }
+
+    /*
     
     const saveAssignment = async (assignment: any) => {
       console.log("1", assignment);
@@ -44,6 +51,7 @@ export default function AssignmentEditor() {
           dispatch(updateAssignment(assignment));
           console.log("2", assignment);
     };
+    */
     
 
     const handleSave = async () => {
@@ -51,7 +59,8 @@ export default function AssignmentEditor() {
         if (isNewAssignment) {
           addAssignmentHandler();
         } else {
-          saveAssignment({ ...assignment});
+          updateAssignmentHandler({ ...assignment });
+          //saveAssignment({ ...assignment});
         }
         navigate(`/Kambaz/Courses/${cid}/Assignments`);
       } catch (error) {
@@ -61,9 +70,6 @@ export default function AssignmentEditor() {
 
     return (
       <div id="wd-assignments-editor">
-        <div className="mb-3 p-2 bg-light">
-          <small>Assignment ID: {assignment._id || "New Assignment"}</small>
-        </div>
           <Form.Group className="mb-3" controlId="wd-assignment-name">
             <Form.Label>Assignment Name</Form.Label>
             <Form.Control placeholder="New Assignment" type="email" value={assignment.title || ""}

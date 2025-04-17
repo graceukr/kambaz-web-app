@@ -2,6 +2,8 @@ import { Button, Card, Col, FormControl, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import FacultyProtectedRoute from "./Courses/FacultyProtectedRoute";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { enrollments } from "./Database";
 
 export default function Dashboard({   
     courses,
@@ -56,7 +58,11 @@ export default function Dashboard({
       const isEnrolled = (courseId: string) => {
         return courses.some((course) => course._id === courseId);
       };
+
+      const { currentUser } = useSelector((state: any) => state.accountReducer);
+      console.log("enrollments", enrollments);
     
+      
     return (
         <div id="wd-dashboard">
             <h1 id="wd-dashboard-title">
@@ -85,7 +91,14 @@ export default function Dashboard({
             <div id="wd-dashboard-courses">
                 <Row xs={1} md={5} className="g-4">
                     {courses 
-                        .map((course) => 
+                        .map((course: {
+                            _id: string;
+                            image: any;
+                            name: string;
+                            enrolled: boolean;
+                            description: string | undefined;
+                        }) => 
+                            course && (
                                 <Col key={course._id} className="wd-dashboard-course" style={{ width: "300px" }}>
                                     <Card className="wd-dashboard-course-link text-decoration-none text-dark">
                                         <Card.Img variant="top" src={course.image} width="100%" height={160} /> 
@@ -128,7 +141,7 @@ export default function Dashboard({
                                         </Card.Body>
                                     </Card>
                                 </Col>
-                        )}
+                        ))}
                 </Row>
             </div>
         </div>

@@ -7,10 +7,10 @@ import "./style.css";
 import { Link, useNavigate, useParams } from "react-router";
 import AssignmentControlButtons from "./AssignmentControlButtons";
 import { useDispatch, useSelector } from "react-redux";
-import { addAssignment, deleteAssignment, setAssignments } from "./reducer";
+import { deleteAssignment, setAssignments } from "./reducer";
 import * as coursesClient from "../client";
 import * as assignmentsClient from "./client"
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 export default function Assignments() {
   const { cid } = useParams();
@@ -20,6 +20,7 @@ export default function Assignments() {
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   const isFaculty = currentUser.role === "FACULTY";
   console.log(currentUser.role);
+  
   
   const fetchAssignmentsForCourse = async () => {
     const assignments = await coursesClient.findAssignmentsForCourse(cid!);
@@ -34,9 +35,6 @@ export default function Assignments() {
   useEffect(() => {
     fetchAssignmentsForCourse();
   }, [cid]);
-
- 
- 
 
 
 /*

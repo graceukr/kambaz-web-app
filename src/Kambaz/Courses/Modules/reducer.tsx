@@ -9,7 +9,7 @@ const modulesSlice = createSlice({
   initialState,
   reducers: {
     setModules: (state, { payload: modules }) => {
-      state.modules = modules; //action.payload;
+      state.modules = modules; 
     },
     addModule: (state, { payload: module }) => {
       const newModule: any = {
