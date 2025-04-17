@@ -2,6 +2,7 @@ import { Button, Card, Col, FormControl, Row } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import FacultyProtectedRoute from "./Courses/FacultyProtectedRoute";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
 export default function Dashboard({   
     courses,
@@ -25,6 +26,8 @@ export default function Dashboard({
     updateEnrollment: (courseId: string, enrolled: boolean) => void
 }) {
     const navigate = useNavigate();
+    const { currentUser } = useSelector((state: any) => state.accountReducer);
+
 
     useEffect(() => {
         console.log("Courses updated:", courses.length, courses);
@@ -108,28 +111,27 @@ export default function Dashboard({
                                                     Go
                                                 </Button>
                                             <FacultyProtectedRoute>
-                                            <Button onClick={() => {
-                                                deleteCourse(course._id);
-                                                }} className="btn btn-danger float-end"
-                                                id="wd-delete-course-click">
-                                                Delete
-                                            </Button>
-                                            <Button id="wd-edit-course-click"
-                                                onClick={(event) => {
-                                                    event.preventDefault();
-                                                    setCourse(course);
-                                                }}
-                                                className="btn btn-warning float-end me-2" >
-                                                Edit
-                                            </Button>
+                                                <Button onClick={() => {
+                                                    deleteCourse(course._id);
+                                                    }} className="btn btn-danger float-end"
+                                                    id="wd-delete-course-click">
+                                                    Delete
+                                                </Button>
+                                                <Button id="wd-edit-course-click"
+                                                    onClick={(event) => {
+                                                        event.preventDefault();
+                                                        setCourse(course);
+                                                    }}
+                                                    className="btn btn-warning float-end me-2" >
+                                                    Edit
+                                                </Button>
                                             </FacultyProtectedRoute>
-                                            
                                             {enrolling && (
                                                 <button onClick={(event) => { 
                                                     event.preventDefault();
                                                     updateEnrollment(course._id, !course.enrolled);
                                                 }}
-                                                    className={`btn mt-2 ${ course.enrolled ? "btn-danger" : "btn-success" } float-end`} >
+                                                    className={`btn float-end ${ course.enrolled ? "btn-danger" : "btn-success" } ${ currentUser && currentUser.role === "FACULTY" ? "mt-2" : "" }`} >
                                                     {course.enrolled ? "Unenroll" : "Enroll"}
                                                 </button>
                                             )}
